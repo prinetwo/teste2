@@ -7,13 +7,13 @@ import org.apache.log4j.Logger;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 
-public class FabricaDeConexoes {
+public class FabricaDeConexoes { // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.alwaysOverridetoString.alwaysOverrideToString
 	Logger logger = Logger.getLogger(FabricaDeConexoes.class);
 	public Connection getConnection(){
 		String url = "jdbc:mysql://localhost/sceweb";
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			return (Connection) DriverManager.getConnection(url,"root","");
+			return (Connection) DriverManager.getConnection(url,"root","batata");
 			}
 		catch (CommunicationsException e){
 			logger.info("Exceção de comunicacao com o DB causa: " + e.getMessage());

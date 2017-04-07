@@ -14,9 +14,13 @@ import br.sceweb.modelo.EmpresaDAO;
 /**
  * Servlet implementation class ServletControle
  */
-public class ServletControle extends HttpServlet {
+public class ServletControle extends HttpServlet { // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.alwaysOverridetoString.alwaysOverrideToString
 	private static final long serialVersionUID = 1L;
-	
+	Logger logger = Logger.getLogger(ServletControle.class);
+	String mensagem = "";
+	EmpresaDAO empresaDAO;
+	String cnpjParaExclusao = "";// seta o cnpj para exclusao
+
 	/**
 	 * Default constructor.
 	 */
@@ -38,10 +42,104 @@ public class ServletControle extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+/*	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		request.setAttribute("erro", null);
+		executaComando(request, response);
+	}*/
+
+	/*protected void executaComando(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String parametro = request.getParameter("acao");
+		logger.info("acao do servletcontrole = " + parametro);
+		String url = "";
+		String resultado = "";
+		request.setAttribute("erro", null);
+		if (parametro.equals("IncluirEmpresa")) {
+			url = "/visao/FormEmpresa.jsp";
+			try {
+				resultado = cadastrarEmpresa(request.getParameter("txtCNPJ"), request.getParameter("txtNomeDaEmpresa"),
+						request.getParameter("txtNomeFantasia"), request.getParameter("txtEndereco"),
+						request.getParameter("txtTelefone"));
+				logger.info("resultado do cadastra = " + resultado);
+				request.setAttribute("msg", resultado);
+				request.getRequestDispatcher(url).forward(request, response);
+			} catch (Exception e) {
+				request.setAttribute("msg", resultado);
+				request.getRequestDispatcher(url).forward(request, response);
+				logger.info("erro  = " + e.getMessage());
+
+			}
+		}
+		if (parametro.equals("ConsultarEmpresa")) {
+			url = "/visao/FormEmpresa.jsp";
+			Empresa empresa = new Empresa();
+			String cnpj = request.getParameter("txtCNPJ");
+			logger.info("consulta empresa  = " + cnpj);
+			try {
+				if (!cnpj.isEmpty()) {
+					empresa = consulta(cnpj);
+					if (empresa != null){
+						logger.info("consulta empresa nome da empresa  = " + empresa.getNomeDaEmpresa());
+						request.setAttribute("nomeDaEmpresa", empresa.getNomeDaEmpresa());
+					    request.setAttribute("cnpj", empresa.getCnpj());
+					    request.setAttribute("nomeFantasia", empresa.getNomeFantasia());
+					    request.setAttribute("endereco", empresa.getEndereco());
+					    request.setAttribute("telefone", empresa.getTelefone());
+					    request.setAttribute("msg", "");
+						url = "/visao/FormEmpresaResultadoDaConsulta.jsp";
+					} else {
+						request.setAttribute("msg", "cnpj invalido");
+					}
+				} else {
+					request.setAttribute("msg", "cnpj invalido");
+				}
+			} catch (Exception e) {
+				logger.info(e.getMessage() + e.getCause());
+			}
+			request.getRequestDispatcher(url).forward(request, response);
+			
+		}
+
+	}*/
+
+	public String cadastrarEmpresa(String cnpj, String nomeDaEmpresa, String nomeFantasia, String endereco,
+			String telefone) {
+		String msg = "";
+		Empresa empresa = new Empresa();
+		EmpresaDAO empresaDAO = new EmpresaDAO();
+		try {
+			empresa.setCnpj(cnpj);
+			empresa.setNomeDaEmpresa(nomeDaEmpresa);
+			empresa.setNomeFantasia(nomeFantasia);
+			empresa.setEndereco(endereco);
+			empresa.setTelefone(telefone);
+			empresaDAO.adiciona(empresa);
+			msg = "cadastro realizado com sucesso";
+
+		} catch (Exception e) {
+			msg = e.getMessage();
+		}
+
+		return msg;
 	}
 
-	
+	/*public Empresa consulta(String cnpj) {
+		logger.info("consulta empresa 2 = " + cnpj);
+		EmpresaDAO empresaDAO = new EmpresaDAO();
+		return empresaDAO.consultaEmpresa(cnpj);
+	}
+
+	public String excluirEmpresa(String cnpj) {
+		String msg = "";
+		EmpresaDAO empresaDAO = new EmpresaDAO();
+		try {
+			empresaDAO.exclui(cnpj);
+			msg = "excluido com sucesso";
+		} catch (Exception e) {
+			msg = e.getMessage();
+		}
+
+		return msg;
+	}*/
 }
