@@ -14,7 +14,8 @@ import br.sceweb.modelo.EmpresaDAO;
 /**
  * Servlet implementation class ServletControle
  */
-public class ServletControle extends HttpServlet { // $codepro.audit.disable com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.alwaysOverridetoString.alwaysOverrideToString
+public class ServletControle extends HttpServlet { // $codepro.audit.disable
+													// com.instantiations.assist.eclipse.analysis.audit.rule.effectivejava.alwaysOverridetoString.alwaysOverrideToString
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(ServletControle.class);
 	String mensagem = "";
@@ -42,13 +43,13 @@ public class ServletControle extends HttpServlet { // $codepro.audit.disable com
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-/*	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setAttribute("erro", null);
 		executaComando(request, response);
-	}*/
+	}
 
-	/*protected void executaComando(HttpServletRequest request, HttpServletResponse response)
+	protected void executaComando(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String parametro = request.getParameter("acao");
 		logger.info("acao do servletcontrole = " + parametro);
@@ -79,14 +80,14 @@ public class ServletControle extends HttpServlet { // $codepro.audit.disable com
 			try {
 				if (!cnpj.isEmpty()) {
 					empresa = consulta(cnpj);
-					if (empresa != null){
+					if (empresa != null) {
 						logger.info("consulta empresa nome da empresa  = " + empresa.getNomeDaEmpresa());
 						request.setAttribute("nomeDaEmpresa", empresa.getNomeDaEmpresa());
-					    request.setAttribute("cnpj", empresa.getCnpj());
-					    request.setAttribute("nomeFantasia", empresa.getNomeFantasia());
-					    request.setAttribute("endereco", empresa.getEndereco());
-					    request.setAttribute("telefone", empresa.getTelefone());
-					    request.setAttribute("msg", "");
+						request.setAttribute("cnpj", empresa.getCnpj());
+						request.setAttribute("nomeFantasia", empresa.getNomeFantasia());
+						request.setAttribute("endereco", empresa.getEndereco());
+						request.setAttribute("telefone", empresa.getTelefone());
+						request.setAttribute("msg", "");
 						url = "/visao/FormEmpresaResultadoDaConsulta.jsp";
 					} else {
 						request.setAttribute("msg", "cnpj invalido");
@@ -98,10 +99,10 @@ public class ServletControle extends HttpServlet { // $codepro.audit.disable com
 				logger.info(e.getMessage() + e.getCause());
 			}
 			request.getRequestDispatcher(url).forward(request, response);
-			
+
 		}
 
-	}*/
+	}
 
 	public String cadastrarEmpresa(String cnpj, String nomeDaEmpresa, String nomeFantasia, String endereco,
 			String telefone) {
@@ -124,7 +125,7 @@ public class ServletControle extends HttpServlet { // $codepro.audit.disable com
 		return msg;
 	}
 
-	/*public Empresa consulta(String cnpj) {
+	public Empresa consulta(String cnpj) {
 		logger.info("consulta empresa 2 = " + cnpj);
 		EmpresaDAO empresaDAO = new EmpresaDAO();
 		return empresaDAO.consultaEmpresa(cnpj);
@@ -141,5 +142,5 @@ public class ServletControle extends HttpServlet { // $codepro.audit.disable com
 		}
 
 		return msg;
-	}*/
+	}
 }
